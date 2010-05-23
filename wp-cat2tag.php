@@ -275,6 +275,11 @@ function check_all_tagrows() {
 					if ( ! ($id = is_term( $category->slug, 'post_tag' ) ) )
 						$id = wp_insert_term($category->name, 'post_tag', array('slug' => $category->slug));
 
+					if ( is_wp_error($id) ) {
+						echo $id->get_error_message() . "</li>\n";
+						continue;
+					}
+
 					$id = $id['term_taxonomy_id'];
 					$posts = get_objects_in_term($category->term_id, 'category');
 					$term_order = 0;
