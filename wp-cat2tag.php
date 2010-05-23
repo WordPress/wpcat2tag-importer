@@ -5,8 +5,8 @@ Plugin URI: http://wordpress.org/extend/plugins/wpcat2tag-importer/
 Description: Convert existing categories to tags or tags to categories, selectively.
 Author: wordpressdotorg
 Author URI: http://wordpress.org/
-Version: 0.3
-Stable tag: 0.3
+Version: 0.4
+Stable tag: 0.4
 License: GPL v2 - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
