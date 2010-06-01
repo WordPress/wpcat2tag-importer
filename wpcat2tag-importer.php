@@ -40,11 +40,11 @@ class WP_Categories_to_Tags extends WP_Importer {
 		echo '<div class="wrap">';
 		if ( ! current_user_can('manage_categories') ) {
 			echo '<div class="narrow">';
-			echo '<p>' . __('Cheatin&#8217; uh?') . '</p>';
+			echo '<p>' . __('Cheatin&#8217; uh?', 'wpcat2tag-importer') . '</p>';
 			echo '</div>';
 		} else { ?>
-			<div class="tablenav"><p style="margin:4px"><a style="display:inline;" class="button-secondary" href="admin.php?import=wp-cat2tag"><?php _e( "Categories to Tags" ); ?></a>
-			<a style="display:inline;" class="button-secondary" href="admin.php?import=wp-cat2tag&amp;step=3"><?php _e( "Tags to Categories" ); ?></a></p></div>
+			<div class="tablenav"><p style="margin:4px"><a style="display:inline;" class="button-secondary" href="admin.php?import=wp-cat2tag"><?php _e( "Categories to Tags" , 'wpcat2tag-importer'); ?></a>
+			<a style="display:inline;" class="button-secondary" href="admin.php?import=wp-cat2tag&amp;step=3"><?php _e( "Tags to Categories" , 'wpcat2tag-importer'); ?></a></p></div>
 <?php	}
 	}
 
@@ -80,14 +80,14 @@ class WP_Categories_to_Tags extends WP_Importer {
 
 		if ( $cat_num > 0 ) {
 			screen_icon();
-			echo '<h2>' . sprintf( _n( 'Convert Category to Tag.', 'Convert Categories (%d) to Tags.', $cat_num ), $cat_num ) . '</h2>';
+			echo '<h2>' . sprintf( _n( 'Convert Category to Tag.', 'Convert Categories (%d) to Tags.', $cat_num , 'wpcat2tag-importer'), $cat_num ) . '</h2>';
 			echo '<div class="narrow">';
-			echo '<p>' . __('Hey there. Here you can selectively convert existing categories to tags. To get started, check the categories you wish to be converted, then click the Convert button.') . '</p>';
-			echo '<p>' . __('Keep in mind that if you convert a category with child categories, the children become top-level orphans.') . '</p></div>';
+			echo '<p>' . __('Hey there. Here you can selectively convert existing categories to tags. To get started, check the categories you wish to be converted, then click the Convert button.', 'wpcat2tag-importer') . '</p>';
+			echo '<p>' . __('Keep in mind that if you convert a category with child categories, the children become top-level orphans.', 'wpcat2tag-importer') . '</p></div>';
 
 			$this->categories_form();
 		} else {
-			echo '<p>'.__('You have no categories to convert!').'</p>';
+			echo '<p>'.__('You have no categories to convert!', 'wpcat2tag-importer').'</p>';
 		}
 	}
 
@@ -104,21 +104,21 @@ function check_all_rows() {
 				field[i].checked = true;
 		}
 		checkflag = 'true';
-		return '<?php _e('Uncheck All') ?>';
+		return '<?php _e('Uncheck All', 'wpcat2tag-importer') ?>';
 	} else {
 		for ( i = 0; i < field.length; i++ ) {
 			if ( 'cats_to_convert[]' == field[i].name )
 				field[i].checked = false;
 		}
 		checkflag = 'false';
-		return '<?php _e('Check All') ?>';
+		return '<?php _e('Check All', 'wpcat2tag-importer') ?>';
 	}
 }
 /* ]]> */
 </script>
 
 <form name="catlist" id="catlist" action="admin.php?import=wp-cat2tag&amp;step=2" method="post">
-<p><input type="button" class="button-secondary" value="<?php esc_attr_e('Check All'); ?>" onclick="this.value=check_all_rows()" />
+<p><input type="button" class="button-secondary" value="<?php esc_attr_e('Check All', 'wpcat2tag-importer'); ?>" onclick="this.value=check_all_rows()" />
 <?php wp_nonce_field('import-cat2tag'); ?></p>
 <ul style="list-style:none">
 
@@ -141,9 +141,9 @@ function check_all_rows() {
 </ul>
 
 <?php	if ( ! empty($this->hybrids_ids) )
-			echo '<p><a name="note"></a>' . __('* This category is also a tag. Converting it will add that tag to all posts that are currently in the category.') . '</p>'; ?>
+			echo '<p><a name="note"></a>' . __('* This category is also a tag. Converting it will add that tag to all posts that are currently in the category.', 'wpcat2tag-importer') . '</p>'; ?>
 
-<p class="submit"><input type="submit" name="submit" class="button" value="<?php esc_attr_e('Convert Categories to Tags'); ?>" /></p>
+<p class="submit"><input type="submit" name="submit" class="button" value="<?php esc_attr_e('Convert Categories to Tags', 'wpcat2tag-importer'); ?>" /></p>
 </form>
 
 <?php }
@@ -156,14 +156,14 @@ function check_all_rows() {
 
 		if ( $tags_num > 0 ) {
 			screen_icon();
-			echo '<h2>' . sprintf( _n( 'Convert Tag to Category.', 'Convert Tags (%d) to Categories.', $tags_num ), $tags_num ) . '</h2>';
+			echo '<h2>' . sprintf( _n( 'Convert Tag to Category.', 'Convert Tags (%d) to Categories.', $tags_num , 'wpcat2tag-importer'), $tags_num ) . '</h2>';
 			echo '<div class="narrow">';
-			echo '<p>' . __('Here you can selectively convert existing tags to categories. To get started, check the tags you wish to be converted, then click the Convert button.') . '</p>';
-			echo '<p>' . __('The newly created categories will still be associated with the same posts.') . '</p></div>';
+			echo '<p>' . __('Here you can selectively convert existing tags to categories. To get started, check the tags you wish to be converted, then click the Convert button.', 'wpcat2tag-importer') . '</p>';
+			echo '<p>' . __('The newly created categories will still be associated with the same posts.', 'wpcat2tag-importer') . '</p></div>';
 
 			$this->tags_form();
 		} else {
-			echo '<p>'.__('You have no tags to convert!').'</p>';
+			echo '<p>'.__('You have no tags to convert!', 'wpcat2tag-importer').'</p>';
 		}
 	}
 
@@ -180,21 +180,21 @@ function check_all_tagrows() {
 				field[i].checked = true;
 		}
 		checktags = 'true';
-		return '<?php _e('Uncheck All') ?>';
+		return '<?php _e('Uncheck All', 'wpcat2tag-importer') ?>';
 	} else {
 		for ( i = 0; i < field.length; i++ ) {
 			if ( 'tags_to_convert[]' == field[i].name )
 				field[i].checked = false;
 		}
 		checktags = 'false';
-		return '<?php _e('Check All') ?>';
+		return '<?php _e('Check All', 'wpcat2tag-importer') ?>';
 	}
 }
 /* ]]> */
 </script>
 
 <form name="taglist" id="taglist" action="admin.php?import=wp-cat2tag&amp;step=4" method="post">
-<p><input type="button" class="button-secondary" value="<?php esc_attr_e('Check All'); ?>" onclick="this.value=check_all_tagrows()" />
+<p><input type="button" class="button-secondary" value="<?php esc_attr_e('Check All', 'wpcat2tag-importer'); ?>" onclick="this.value=check_all_tagrows()" />
 <?php wp_nonce_field('import-cat2tag'); ?></p>
 <ul style="list-style:none">
 
@@ -205,9 +205,9 @@ function check_all_tagrows() {
 </ul>
 
 <?php	if ( ! empty($this->hybrids_ids) )
-			echo '<p><a name="note"></a>' . __('* This tag is also a category. When converted, all posts associated with the tag will also be in the category.') . '</p>'; ?>
+			echo '<p><a name="note"></a>' . __('* This tag is also a category. When converted, all posts associated with the tag will also be in the category.', 'wpcat2tag-importer') . '</p>'; ?>
 
-<p class="submit"><input type="submit" name="submit_tags" class="button" value="<?php esc_attr_e('Convert Tags to Categories'); ?>" /></p>
+<p class="submit"><input type="submit" name="submit_tags" class="button" value="<?php esc_attr_e('Convert Tags to Categories', 'wpcat2tag-importer'); ?>" /></p>
 </form>
 
 <?php }
@@ -245,7 +245,7 @@ function check_all_tagrows() {
 
 		if ( (!isset($_POST['cats_to_convert']) || !is_array($_POST['cats_to_convert'])) && empty($this->categories_to_convert)) { ?>
 			<div class="narrow">
-			<p><?php printf(__('Uh, oh. Something didn&#8217;t work. Please <a href="%s">try again</a>.'), 'admin.php?import=wp-cat2tag'); ?></p>
+			<p><?php printf(__('Uh, oh. Something didn&#8217;t work. Please <a href="%s">try again</a>.', 'wpcat2tag-importer'), 'admin.php?import=wp-cat2tag'); ?></p>
 			</div>
 <?php		return;
 		}
@@ -264,10 +264,10 @@ function check_all_tagrows() {
 			$cat_id = (int) $cat_id;
 
 			if ( ! $this->_category_exists($cat_id) ) {
-				echo '<li>' . sprintf( __('Category %s doesn&#8217;t exist!'),  $cat_id ) . "</li>\n";
+				echo '<li>' . sprintf( __('Category %s doesn&#8217;t exist!', 'wpcat2tag-importer'),  $cat_id ) . "</li>\n";
 			} else {
 				$category =& get_category($cat_id);
-				echo '<li>' . sprintf(__('Converting category <strong>%s</strong> ... '),  $category->name);
+				echo '<li>' . sprintf(__('Converting category <strong>%s</strong> ... ', 'wpcat2tag-importer'),  $category->name);
 
 				// If the category is the default, leave category in place and create tag.
 				if ( $default_cat == $category->term_id ) {
@@ -295,7 +295,7 @@ function check_all_tagrows() {
 						$wpdb->update($wpdb->term_taxonomy, array('count' => $category->count), array('term_id' => $category->term_id, 'taxonomy' => 'post_tag') );
 					}
 
-					echo __('Converted successfully.') . "</li>\n";
+					echo __('Converted successfully.', 'wpcat2tag-importer') . "</li>\n";
 					continue;
 				}
 
@@ -314,7 +314,7 @@ function check_all_tagrows() {
 						$count = $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->term_relationships WHERE term_taxonomy_id = %d", $tag_ttid) );
 						$wpdb->update($wpdb->term_taxonomy, array('count' => $count), array('term_id' => $category->term_id, 'taxonomy' => 'post_tag') );
 					}
-					echo __('Tag added to all posts in this category.') . " *</li>\n";
+					echo __('Tag added to all posts in this category.', 'wpcat2tag-importer') . " *</li>\n";
 
 					$hybrid_cats = true;
 					$clean_term_cache[] = $category->term_id;
@@ -338,7 +338,7 @@ function check_all_tagrows() {
 
 				if ( $parents ) $clear_parents = true;
 				$clean_cat_cache[] = $category->term_id;
-				echo __('Converted successfully.') . "</li>\n";
+				echo __('Converted successfully.', 'wpcat2tag-importer') . "</li>\n";
 			}
 		}
 		echo '</ul>';
@@ -356,8 +356,8 @@ function check_all_tagrows() {
 		if ( $clear_parents ) delete_option('category_children');
 
 		if ( $hybrid_cats )
-			echo '<p>' . sprintf( __('* This category is also a tag. The converter has added that tag to all posts currently in the category. If you want to remove it, please confirm that all tags were added successfully, then delete it from the <a href="%s">Manage Categories</a> page.'), 'categories.php') . '</p>';
-		echo '<p>' . sprintf( __('We&#8217;re all done here, but you can always <a href="%s">convert more</a>.'), 'admin.php?import=wp-cat2tag' ) . '</p>';
+			echo '<p>' . sprintf( __('* This category is also a tag. The converter has added that tag to all posts currently in the category. If you want to remove it, please confirm that all tags were added successfully, then delete it from the <a href="%s">Manage Categories</a> page.', 'wpcat2tag-importer'), 'categories.php') . '</p>';
+		echo '<p>' . sprintf( __('We&#8217;re all done here, but you can always <a href="%s">convert more</a>.', 'wpcat2tag-importer'), 'admin.php?import=wp-cat2tag' ) . '</p>';
 	}
 
 	function convert_tags() {
@@ -365,7 +365,7 @@ function check_all_tagrows() {
 
 		if ( (!isset($_POST['tags_to_convert']) || !is_array($_POST['tags_to_convert'])) && empty($this->tags_to_convert)) {
 			echo '<div class="narrow">';
-			echo '<p>' . sprintf(__('Uh, oh. Something didn&#8217;t work. Please <a href="%s">try again</a>.'), 'admin.php?import=wp-cat2tag&amp;step=3') . '</p>';
+			echo '<p>' . sprintf(__('Uh, oh. Something didn&#8217;t work. Please <a href="%s">try again</a>.', 'wpcat2tag-importer'), 'admin.php?import=wp-cat2tag&amp;step=3') . '</p>';
 			echo '</div>';
 			return;
 		}
@@ -382,7 +382,7 @@ function check_all_tagrows() {
 			$tag_id = (int) $tag_id;
 
 			if ( $tag = get_term( $tag_id, 'post_tag' ) ) {
-				printf('<li>' . __('Converting tag <strong>%s</strong> ... '),  $tag->name);
+				printf('<li>' . __('Converting tag <strong>%s</strong> ... ', 'wpcat2tag-importer'),  $tag->name);
 
 				if ( $cat_ttid = $wpdb->get_var( $wpdb->prepare("SELECT term_taxonomy_id FROM $wpdb->term_taxonomy WHERE term_id = %d AND taxonomy = 'category'", $tag->term_id) ) ) {
 					$objects_ids = get_objects_in_term($tag->term_id, 'post_tag');
@@ -406,7 +406,7 @@ function check_all_tagrows() {
 					$hybrid_tags = true;
 					$clean_term_cache[] = $tag->term_id;
 					$clean_cat_cache[] = $tag->term_id;
-					echo __('All posts were added to the category with the same name.') . " *</li>\n";
+					echo __('All posts were added to the category with the same name.', 'wpcat2tag-importer') . " *</li>\n";
 
 					continue;
 				}
@@ -424,10 +424,10 @@ function check_all_tagrows() {
 
 				$clean_term_cache[] = $tag->term_id;
 				$clean_cat_cache[] = $cat['term_id'];
-				echo __('Converted successfully.') . "</li>\n";
+				echo __('Converted successfully.', 'wpcat2tag-importer') . "</li>\n";
 
 			} else {
-				printf( '<li>' . __('Tag #%s doesn&#8217;t exist!') . "</li>\n",  $tag_id );
+				printf( '<li>' . __('Tag #%s doesn&#8217;t exist!', 'wpcat2tag-importer') . "</li>\n",  $tag_id );
 			}
 		}
 
@@ -445,8 +445,8 @@ function check_all_tagrows() {
 
 		echo '</ul>';
 		if ( $hybrid_tags )
-			echo '<p>' . sprintf( __('* This tag is also a category. The converter has added all posts from it to the category. If you want to remove it, please confirm that all posts were added successfully, then delete it from the <a href="%s">Manage Tags</a> page.'), 'edit-tags.php') . '</p>';
-		echo '<p>' . sprintf( __('We&#8217;re all done here, but you can always <a href="%s">convert more</a>.'), 'admin.php?import=wp-cat2tag&amp;step=3' ) . '</p>';
+			echo '<p>' . sprintf( __('* This tag is also a category. The converter has added all posts from it to the category. If you want to remove it, please confirm that all posts were added successfully, then delete it from the <a href="%s">Manage Tags</a> page.', 'wpcat2tag-importer'), 'edit-tags.php') . '</p>';
+		echo '<p>' . sprintf( __('We&#8217;re all done here, but you can always <a href="%s">convert more</a>.', 'wpcat2tag-importer'), 'admin.php?import=wp-cat2tag&amp;step=3' ) . '</p>';
 	}
 
 	function init() {
@@ -488,6 +488,11 @@ function check_all_tagrows() {
 
 $wp_cat2tag_importer = new WP_Categories_to_Tags();
 
-register_importer('wpcat2tag', __('Categories and Tags Converter'), __('Convert existing categories to tags or tags to categories, selectively.'), array(&$wp_cat2tag_importer, 'init'));
+register_importer('wpcat2tag', __('Categories and Tags Converter', 'wpcat2tag-importer'), __('Convert existing categories to tags or tags to categories, selectively.', 'wpcat2tag-importer'), array(&$wp_cat2tag_importer, 'init'));
 
 } // class_exists( 'WP_Importer' )
+
+function wpcat2tag_importer_init() {
+    load_plugin_textdomain( 'wpcat2tag-importer', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+}
+add_action( 'init', 'wpcat2tag_importer_init' );
