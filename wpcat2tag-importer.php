@@ -5,8 +5,7 @@ Plugin URI: http://wordpress.org/extend/plugins/wpcat2tag-importer/
 Description: Convert existing categories to tags or tags to categories, selectively.
 Author: wordpressdotorg
 Author URI: http://wordpress.org/
-Version: 0.4
-Stable tag: 0.4
+Version: 0.5
 License: GPL v2 - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
@@ -43,8 +42,8 @@ class WP_Categories_to_Tags extends WP_Importer {
 			echo '<p>' . __('Cheatin&#8217; uh?', 'wpcat2tag-importer') . '</p>';
 			echo '</div>';
 		} else { ?>
-			<div class="tablenav"><p style="margin:4px"><a style="display:inline;" class="button-secondary" href="admin.php?import=wp-cat2tag"><?php _e( "Categories to Tags" , 'wpcat2tag-importer'); ?></a>
-			<a style="display:inline;" class="button-secondary" href="admin.php?import=wp-cat2tag&amp;step=3"><?php _e( "Tags to Categories" , 'wpcat2tag-importer'); ?></a></p></div>
+			<div class="tablenav"><p style="margin:4px"><a style="display:inline;" class="button-secondary" href="admin.php?import=wpcat2tag"><?php _e( "Categories to Tags" , 'wpcat2tag-importer'); ?></a>
+			<a style="display:inline;" class="button-secondary" href="admin.php?import=wpcat2tag&amp;step=3"><?php _e( "Tags to Categories" , 'wpcat2tag-importer'); ?></a></p></div>
 <?php	}
 	}
 
@@ -117,7 +116,7 @@ function check_all_rows() {
 /* ]]> */
 </script>
 
-<form name="catlist" id="catlist" action="admin.php?import=wp-cat2tag&amp;step=2" method="post">
+<form name="catlist" id="catlist" action="admin.php?import=wpcat2tag&amp;step=2" method="post">
 <p><input type="button" class="button-secondary" value="<?php esc_attr_e('Check All', 'wpcat2tag-importer'); ?>" onclick="this.value=check_all_rows()" />
 <?php wp_nonce_field('import-cat2tag'); ?></p>
 <ul style="list-style:none">
@@ -193,7 +192,7 @@ function check_all_tagrows() {
 /* ]]> */
 </script>
 
-<form name="taglist" id="taglist" action="admin.php?import=wp-cat2tag&amp;step=4" method="post">
+<form name="taglist" id="taglist" action="admin.php?import=wpcat2tag&amp;step=4" method="post">
 <p><input type="button" class="button-secondary" value="<?php esc_attr_e('Check All', 'wpcat2tag-importer'); ?>" onclick="this.value=check_all_tagrows()" />
 <?php wp_nonce_field('import-cat2tag'); ?></p>
 <ul style="list-style:none">
@@ -245,7 +244,7 @@ function check_all_tagrows() {
 
 		if ( (!isset($_POST['cats_to_convert']) || !is_array($_POST['cats_to_convert'])) && empty($this->categories_to_convert)) { ?>
 			<div class="narrow">
-			<p><?php printf(__('Uh, oh. Something didn&#8217;t work. Please <a href="%s">try again</a>.', 'wpcat2tag-importer'), 'admin.php?import=wp-cat2tag'); ?></p>
+			<p><?php printf(__('Uh, oh. Something didn&#8217;t work. Please <a href="%s">try again</a>.', 'wpcat2tag-importer'), 'admin.php?import=wpcat2tag'); ?></p>
 			</div>
 <?php		return;
 		}
@@ -357,7 +356,7 @@ function check_all_tagrows() {
 
 		if ( $hybrid_cats )
 			echo '<p>' . sprintf( __('* This category is also a tag. The converter has added that tag to all posts currently in the category. If you want to remove it, please confirm that all tags were added successfully, then delete it from the <a href="%s">Manage Categories</a> page.', 'wpcat2tag-importer'), 'categories.php') . '</p>';
-		echo '<p>' . sprintf( __('We&#8217;re all done here, but you can always <a href="%s">convert more</a>.', 'wpcat2tag-importer'), 'admin.php?import=wp-cat2tag' ) . '</p>';
+		echo '<p>' . sprintf( __('We&#8217;re all done here, but you can always <a href="%s">convert more</a>.', 'wpcat2tag-importer'), 'admin.php?import=wpcat2tag' ) . '</p>';
 	}
 
 	function convert_tags() {
@@ -365,7 +364,7 @@ function check_all_tagrows() {
 
 		if ( (!isset($_POST['tags_to_convert']) || !is_array($_POST['tags_to_convert'])) && empty($this->tags_to_convert)) {
 			echo '<div class="narrow">';
-			echo '<p>' . sprintf(__('Uh, oh. Something didn&#8217;t work. Please <a href="%s">try again</a>.', 'wpcat2tag-importer'), 'admin.php?import=wp-cat2tag&amp;step=3') . '</p>';
+			echo '<p>' . sprintf(__('Uh, oh. Something didn&#8217;t work. Please <a href="%s">try again</a>.', 'wpcat2tag-importer'), 'admin.php?import=wpcat2tag&amp;step=3') . '</p>';
 			echo '</div>';
 			return;
 		}
@@ -446,7 +445,7 @@ function check_all_tagrows() {
 		echo '</ul>';
 		if ( $hybrid_tags )
 			echo '<p>' . sprintf( __('* This tag is also a category. The converter has added all posts from it to the category. If you want to remove it, please confirm that all posts were added successfully, then delete it from the <a href="%s">Manage Tags</a> page.', 'wpcat2tag-importer'), 'edit-tags.php') . '</p>';
-		echo '<p>' . sprintf( __('We&#8217;re all done here, but you can always <a href="%s">convert more</a>.', 'wpcat2tag-importer'), 'admin.php?import=wp-cat2tag&amp;step=3' ) . '</p>';
+		echo '<p>' . sprintf( __('We&#8217;re all done here, but you can always <a href="%s">convert more</a>.', 'wpcat2tag-importer'), 'admin.php?import=wpcat2tag&amp;step=3' ) . '</p>';
 	}
 
 	function init() {
