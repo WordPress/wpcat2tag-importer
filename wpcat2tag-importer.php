@@ -56,7 +56,7 @@ class WP_Categories_to_Tags extends WP_Importer {
 		$categories = get_categories(array('get' => 'all'));
 		foreach ( $categories as $category ) {
 			$this->all_categories[] = $category;
-			if ( is_term( $category->slug, 'post_tag' ) )
+			if ( term_exists( $category->slug, 'post_tag' ) )
 				$this->hybrids_ids[] = $category->term_id;
 		}
 	}
@@ -66,7 +66,7 @@ class WP_Categories_to_Tags extends WP_Importer {
 		$tags = get_terms( array('post_tag'), array('get' => 'all') );
 		foreach ( $tags as $tag ) {
 			$this->all_tags[] = $tag;
-			if ( is_term( $tag->slug, 'category' ) )
+			if ( term_exists( $tag->slug, 'category' ) )
 				$this->hybrids_ids[] = $tag->term_id;
 		}
 	}
@@ -271,7 +271,7 @@ function check_all_tagrows() {
 				// If the category is the default, leave category in place and create tag.
 				if ( $default_cat == $category->term_id ) {
 
-					if ( ! ($id = is_term( $category->slug, 'post_tag' ) ) )
+					if ( ! ($id = term_exists( $category->slug, 'post_tag' ) ) )
 						$id = wp_insert_term($category->name, 'post_tag', array('slug' => $category->slug));
 
 					if ( is_wp_error($id) ) {
