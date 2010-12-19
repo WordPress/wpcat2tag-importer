@@ -5,13 +5,12 @@ Plugin URI: http://wordpress.org/extend/plugins/wpcat2tag-importer/
 Description: Convert existing categories to tags or tags to categories, selectively.
 Author: wordpressdotorg
 Author URI: http://wordpress.org/
-Version: 0.5.1
+Version: 0.5.2
 License: GPL v2 - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 /* == Todo ==
  * - ensure following expected behaviour in all cases... what is expected behaviour? remove+delete the old cat/tag/format?
- *			^^^ what to do on default category? (should probably leave it in place)
  * - cache cleaning (think wp_delete_term does most, if not all)
  * - more UI cleanup (indent for child cats, what should convert to selectors look like?, ...)
  * - re-introduce select all option (old button was ugly)
@@ -249,6 +248,12 @@ class WP_Categories_to_Tags extends WP_Importer {
 		$convert_to = 'tag' == $_POST['convert_to'] ? 'post_tag' : 'category';
 		if ( ! $term_info = term_exists( $_POST['convert_to_slug'], $convert_to ) )
 			$term_info = wp_insert_term( $_POST['convert_to_slug'], $convert_to );
+			
+		if ( is_wp_error($term_info) ) {
+			echo '<p>' . $term_info->get_error_message() . ' ';
+			printf( __( 'Please <a href="%s">try again</a>.', 'wpcat2tag-importer' ), 'admin.php?import=wpcat2tag&amp;tab=cats' ) . "</p>\n";
+			return;
+		}
 
 		echo '<ul>';
 
@@ -302,6 +307,8 @@ class WP_Categories_to_Tags extends WP_Importer {
 			echo '</div>';
 			return;
 		}
+		
+		$default = get_option( 'default_category' );
 
 		if ( ! isset($_POST['convert_to']) || 'format' != $_POST['convert_to'] ) {
 			$convert_to = 'post_tag';
@@ -330,9 +337,27 @@ class WP_Categories_to_Tags extends WP_Importer {
 				if ( 'post_tag' == $convert_to ) {
 					if ( ! $term_info = term_exists( $category->slug, 'post_tag' ) )
 						$term_info = wp_insert_term( $category->name, 'post_tag', array( 'description' => $category->description ) );
+						
+					if ( is_wp_error($term_info) ) {
+						echo $term_info->get_error_message() . "</li>\n";
+						continue;
+					}
 				}
 
-				$this->_convert_term( array( 'term_id' => $category->term_id, 'taxonomy' => 'category', 'term_taxonomy_id' => $category->term_taxonomy_id ), $term_info['term_taxonomy_id'] );
+				// if this is the default category then leave it in place and just add the new tag/format
+				if ( $default == $category->term_id ) {
+					$posts = get_objects_in_term( $category->term_id, 'category' );
+					foreach ( $posts as $post ) {
+						$values[] = $wpdb->prepare( "(%d, %d, 0)", $post, $term_info['term_taxonomy_id'] );
+						clean_post_cache( $post );
+					}
+					
+					$wpdb->query( "INSERT INTO {$wpdb->term_relationships} (object_id, term_taxonomy_id, term_order) VALUES " . join(',', $values) );
+					$wpdb->update( $wpdb->term_taxonomy, array( 'count' => $category->count ), array( 'term_id' => $term_info['term_id'], 'taxonomy' => $convert_to ) );
+				// otherwise just convert it
+				} else {
+					$this->_convert_term( array( 'term_id' => $category->term_id, 'taxonomy' => 'category', 'term_taxonomy_id' => $category->term_taxonomy_id ), $term_info['term_taxonomy_id'] );
+				}
 
 				echo __( 'Converted successfully.', 'wpcat2tag-importer' ) . "</li>\n";
 			}
@@ -379,6 +404,11 @@ class WP_Categories_to_Tags extends WP_Importer {
 				if ( 'category' == $convert_to ) {
 					if ( ! $term_info = term_exists( $tag->slug, 'category' ) )
 						$term_info = wp_insert_term( $tag->name, 'category', array( 'description' => $tag->description ) );
+						
+					if ( is_wp_error($term_info) ) {
+						echo $term_info->get_error_message() . "</li>\n";
+						continue;
+					}
 				}
 
 				$this->_convert_term( array( 'term_id' => $tag->term_id, 'taxonomy' => 'post_tag', 'term_taxonomy_id' => $tag->term_taxonomy_id ), $term_info['term_taxonomy_id'] );
