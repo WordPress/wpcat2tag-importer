@@ -3,8 +3,10 @@ Contributors: wordpressdotorg
 Donate link: 
 Tags: importer, categories and tags converter
 Requires at least: 3.0
-Tested up to: 3.0.3
+Tested up to: 3.4
 Stable tag: 0.5
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Convert existing categories to tags or tags to categories, selectively.
 
