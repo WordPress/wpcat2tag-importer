@@ -3,7 +3,7 @@ Contributors: wordpressdotorg
 Donate link: 
 Tags: importer, categories and tags converter
 Requires at least: 3.0
-Tested up to: 3.0.3
+Tested up to: 4.1
 Stable tag: 0.5
 
 Convert existing categories to tags or tags to categories, selectively.
