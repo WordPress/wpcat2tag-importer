@@ -475,8 +475,6 @@ class WP_Categories_to_Tags extends WP_Importer {
 
 		$this->footer();
 	}
-
-	function WP_Categories_to_Tags() { /* Do nothing. */ }
 }
 
 $wp_cat2tag_importer = new WP_Categories_to_Tags();
