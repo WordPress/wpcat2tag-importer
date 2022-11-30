@@ -5,7 +5,7 @@ Plugin URI: http://wordpress.org/extend/plugins/wpcat2tag-importer/
 Description: Convert existing categories to tags or tags to categories, selectively.
 Author: wordpressdotorg
 Author URI: http://wordpress.org/
-Version: 0.5.2
+Version: 0.6
 License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
@@ -54,7 +54,11 @@ class WP_Categories_to_Tags extends WP_Importer {
 			$tabs['formats'] = array( 'label' => __( 'Formats', 'wpcat2tag-importer' ), 'url' => admin_url( 'admin.php?import=wpcat2tag&tab=formats' ) ); ?>
 
 		<div class="wrap">
-		<?php screen_icon(); ?>
+		<?php
+			if ( version_compare( get_bloginfo( 'version' ), '3.8.0', '<' ) ) {
+				screen_icon();
+			}
+		?>
 		<h2><?php _e( 'Categories, Tags and Formats Converter', 'wpcat2tag-importer' ); ?></h2>
 		<h3 class="nav-tab-wrapper">
 		<?php foreach ( $tabs as $tab => $info ) :
@@ -248,7 +252,7 @@ class WP_Categories_to_Tags extends WP_Importer {
 		$convert_to = 'tag' == $_POST['convert_to'] ? 'post_tag' : 'category';
 		if ( ! $term_info = term_exists( $_POST['convert_to_slug'], $convert_to ) )
 			$term_info = wp_insert_term( $_POST['convert_to_slug'], $convert_to );
-			
+
 		if ( is_wp_error($term_info) ) {
 			echo '<p>' . $term_info->get_error_message() . ' ';
 			printf( __( 'Please <a href="%s">try again</a>.', 'wpcat2tag-importer' ), 'admin.php?import=wpcat2tag&amp;tab=cats' ) . "</p>\n";
@@ -307,7 +311,7 @@ class WP_Categories_to_Tags extends WP_Importer {
 			echo '</div>';
 			return;
 		}
-		
+
 		$default = get_option( 'default_category' );
 
 		if ( ! isset($_POST['convert_to']) || 'format' != $_POST['convert_to'] ) {
@@ -337,7 +341,7 @@ class WP_Categories_to_Tags extends WP_Importer {
 				if ( 'post_tag' == $convert_to ) {
 					if ( ! $term_info = term_exists( $category->slug, 'post_tag' ) )
 						$term_info = wp_insert_term( $category->name, 'post_tag', array( 'description' => $category->description ) );
-						
+
 					if ( is_wp_error($term_info) ) {
 						echo $term_info->get_error_message() . "</li>\n";
 						continue;
@@ -351,7 +355,7 @@ class WP_Categories_to_Tags extends WP_Importer {
 						$values[] = $wpdb->prepare( "(%d, %d, 0)", $post, $term_info['term_taxonomy_id'] );
 						clean_post_cache( $post );
 					}
-					
+
 					$wpdb->query( "INSERT INTO {$wpdb->term_relationships} (object_id, term_taxonomy_id, term_order) VALUES " . join(',', $values) );
 					$wpdb->update( $wpdb->term_taxonomy, array( 'count' => $category->count ), array( 'term_id' => $term_info['term_id'], 'taxonomy' => $convert_to ) );
 				// otherwise just convert it
@@ -404,7 +408,7 @@ class WP_Categories_to_Tags extends WP_Importer {
 				if ( 'category' == $convert_to ) {
 					if ( ! $term_info = term_exists( $tag->slug, 'category' ) )
 						$term_info = wp_insert_term( $tag->name, 'category', array( 'description' => $tag->description ) );
-						
+
 					if ( is_wp_error($term_info) ) {
 						echo $term_info->get_error_message() . "</li>\n";
 						continue;
