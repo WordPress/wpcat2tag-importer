@@ -184,7 +184,7 @@ msgid "Categories to Tags Converter Importer"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid "http://wordpress.org/extend/plugins/wpcat2tag-importer/"
+msgid "https://wordpress.org/extend/plugins/wpcat2tag-importer/"
 msgstr ""
 
 #. Author of the plugin/theme
@@ -192,5 +192,5 @@ msgid "wordpressdotorg"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "http://wordpress.org/"
+msgid "https://wordpress.org/"
 msgstr ""
