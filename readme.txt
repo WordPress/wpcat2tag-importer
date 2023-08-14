@@ -22,6 +22,9 @@ Convert existing categories to tags or tags to categories, selectively.
 
 == Changelog ==
 
+= 0.6.2 =
+* Testing the plugin up to WordPress 6.3
+
 = 0.6.1 =
 * Testing the plugin up to WordPress 6.2
 
