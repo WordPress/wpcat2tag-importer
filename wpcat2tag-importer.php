@@ -284,7 +284,7 @@ class WP_Categories_to_Tags extends WP_Importer {
 		echo '<ul>';
 
 		foreach ( $hier[$parent->term_id] as $child_id ) {
-			$child =& get_category($child_id);
+			$child = get_category($child_id);
 
 			echo '<li><label><input type="checkbox" name="cats_to_convert[]" value="'. intval($child->term_id) .'" /> ' . esc_html($child->name) . " ({$child->count})</label>";
 
