@@ -3,8 +3,8 @@ Contributors: wordpressdotorg
 Donate link:
 Tags: importer, categories and tags converter
 Requires at least: 3.0
-Tested up to: 6.4.2
-Stable tag: 0.6.2
+Tested up to: 6.7
+Stable tag: 0.6.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,10 @@ Convert existing categories to tags or tags to categories, selectively.
 1. Go to the Tools -> Import screen, Click on Categories and Tags Converter
 
 == Changelog ==
+
+= 0.6.3 =
+* Testing the plugin up to WordPress 6.7
+* Fix minor issue on reference assign
 
 = 0.6.2 =
 * Testing the plugin up to WordPress 6.4.2
